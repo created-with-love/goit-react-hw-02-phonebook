@@ -1,0 +1,13 @@
+.search__contact {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 2px;
+}
+
+.search__label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0;
+}
