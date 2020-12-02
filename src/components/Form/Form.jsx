@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import s from './Form.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,7 +6,6 @@ class Form extends Component {
   state = {
     name: '',
     number: '',
-    // formSubmitHandler: this.props.formSubmitHandler,
   };
 
   nameId = uuidv4();
@@ -53,17 +52,18 @@ class Form extends Component {
           <label>
             <p className={s.form__label}>Number</p>
             <input
-              type="number"
+              type="tel"
               name="number"
               value={number}
               onChange={this.handleInputChange}
+              maxLength="9"
+              minLength="9"
             ></input>
           </label>
           <button
             className={s.form__button}
             type="submit"
             disabled={name === '' || number === ''}
-            // onClick={() => this.state.formSubmitHandler(this.state)}
           >
             Add contact
           </button>

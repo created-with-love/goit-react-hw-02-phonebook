@@ -13,8 +13,14 @@ class Contacts extends Component {
     });
   };
 
-  render() {
+  getFiltredContacts() {
     const { contacts } = this.state;
+    return contacts.filter(person =>
+      person.name.toLowerCase().includes(this.state.filter),
+    );
+  }
+
+  render() {
     return (
       <div>
         <label htmlFor="search">
@@ -27,15 +33,18 @@ class Contacts extends Component {
           />
         </label>
         <ul>
-          {contacts
-            .filter(person =>
-              person.name.toLowerCase().includes(this.state.filter),
-            )
-            .map(person => (
-              <li key={person.id} className={s.search__contact}>
-                {person.name} : {person.number}
-              </li>
-            ))}
+          {this.getFiltredContacts().map(person => (
+            <li key={person.id} className={s.search__contact}>
+              {person.name} : {person.number}
+              <button
+                className={s.search__button}
+                type="button"
+                onClick={() => this.props.onDeleteBtnClick(person.id)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
     );
