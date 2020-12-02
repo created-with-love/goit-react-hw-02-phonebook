@@ -3,19 +3,25 @@ import dataFromServer from './data/contacts.json';
 import Form from './components/Form';
 import Section from './components/Section';
 import Contacts from './components/Contacts';
+import Filter from './components/Filter';
 import { v4 as uuidv4 } from 'uuid';
 
 class App extends Component {
   state = {
     contacts: dataFromServer,
+    filter: '',
   };
 
   formSubmitHandler = data => {
-    data.id = uuidv4();
+    if (this.state.contacts.some(({ name }) => name === data.name)) {
+      alert(`${data.name} is already in contacts.`);
+    } else {
+      data.id = uuidv4();
 
-    this.setState(({ contacts }) => ({
-      contacts: [data, ...contacts],
-    }));
+      this.setState(({ contacts }) => ({
+        contacts: [data, ...contacts],
+      }));
+    }
   };
 
   deleteContact = id => {
@@ -25,8 +31,22 @@ class App extends Component {
     }));
   };
 
-  render() {
+  handleSearch = e => {
+    this.setState({
+      filter: e.currentTarget.value.toLowerCase(),
+    });
+  };
+
+  getFiltredContacts() {
     const { contacts } = this.state;
+    return contacts.filter(person =>
+      person.name.toLowerCase().includes(this.state.filter),
+    );
+  }
+
+  render() {
+    const { filter } = this.state;
+    const filteredContacts = this.getFiltredContacts();
 
     return (
       <>
@@ -35,7 +55,11 @@ class App extends Component {
         </Section>
 
         <Section title="Contacts">
-          <Contacts contacts={contacts} onDeleteBtnClick={this.deleteContact} />
+          <Filter value={filter} onChange={this.handleSearch} />
+          <Contacts
+            contacts={filteredContacts}
+            onDeleteBtnClick={this.deleteContact}
+          />
         </Section>
       </>
     );

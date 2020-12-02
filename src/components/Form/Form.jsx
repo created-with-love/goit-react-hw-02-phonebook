@@ -11,7 +11,7 @@ class Form extends Component {
   nameId = uuidv4();
 
   handleInputChange = event => {
-    const { name, value } = event.currentTarget;
+    let { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
 
@@ -47,6 +47,7 @@ class Form extends Component {
               value={name}
               onChange={this.handleInputChange}
               id={this.nameId}
+              required
             ></input>
           </label>
           <label>
@@ -57,7 +58,10 @@ class Form extends Component {
               value={number}
               onChange={this.handleInputChange}
               maxLength="9"
-              minLength="9"
+              minLength="7"
+              pattern="[0-9]{3}-{0,1}[0-9]{2}-{0,1}[0-9]{2}"
+              required
+              placeholder="123-45-67"
             ></input>
           </label>
           <button

@@ -42,7 +42,7 @@
   justify-content: space-between;
   list-style: circle;
   align-items: baseline;
-  width: 350px;
+  width: 400px;
 }
 
 .search__contact::before {
