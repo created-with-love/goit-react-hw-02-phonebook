@@ -39,14 +39,15 @@ class App extends Component {
 
   handleSearch = e => {
     this.setState({
-      filter: e.currentTarget.value.toLowerCase(),
+      filter: e.currentTarget.value,
     });
   };
 
   getFiltredContacts() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+    const lowerCaseFilter = filter.toLowerCase();
     return contacts.filter(person =>
-      person.name.toLowerCase().includes(this.state.filter),
+      person.name.toLowerCase().includes(lowerCaseFilter),
     );
   }
 
