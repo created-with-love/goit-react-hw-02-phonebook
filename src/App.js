@@ -13,19 +13,25 @@ class App extends Component {
   };
 
   formSubmitHandler = data => {
-    if (this.state.contacts.some(({ name }) => name === data.name)) {
-      alert(`${data.name} is already in contacts.`);
-    } else {
-      data.id = uuidv4();
+    const { contacts } = this.state;
+    const isContactValid = this.validateContact(data, contacts);
 
+    if (isContactValid) {
+      data.id = uuidv4();
       this.setState(({ contacts }) => ({
         contacts: [data, ...contacts],
       }));
     }
   };
 
+  validateContact = (data, contacts) => {
+    if (contacts.some(({ name }) => name === data.name)) {
+      alert(`${data.name} is already in contacts.`);
+      return false;
+    } else return true;
+  };
+
   deleteContact = id => {
-    console.log(id);
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
